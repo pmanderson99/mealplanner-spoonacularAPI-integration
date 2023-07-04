@@ -8,7 +8,7 @@ public class Week {
 	private DayResponse thursday;
 	private DayResponse friday;
 	private DayResponse saturday;
-	private DayResponse Sunday;
+	private DayResponse sunday;
 	
 	public DayResponse getMonday() {
 		return monday;
@@ -47,16 +47,16 @@ public class Week {
 		this.saturday = saturday;
 	}
 	public DayResponse getSunday() {
-		return Sunday;
-	}
-	public void setSunday(DayResponse sunday) {
-		Sunday = sunday;
+		return sunday;
 	}
 	
+	public void setSunday(DayResponse sunday) {
+		this.sunday = sunday;
+	}
 	@Override
 	public String toString() {
 		return "Week [monday=" + monday + ", tuesday=" + tuesday + ", wednesday=" + wednesday + ", thursday=" + thursday
-				+ ", friday=" + friday + ", saturday=" + saturday + ", Sunday=" + Sunday + "]";
+				+ ", friday=" + friday + ", saturday=" + saturday + ", sunday=" + sunday + "]";
 	}
 	
 	
