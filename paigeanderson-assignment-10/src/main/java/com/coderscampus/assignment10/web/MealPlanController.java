@@ -1,7 +1,7 @@
 package com.coderscampus.assignment10.web;
 
 import java.net.URI;
-import java.util.Optional;
+
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,11 +39,10 @@ public class MealPlanController {
 		URI uri = UriComponentsBuilder.fromHttpUrl("https://api.spoonacular.com/mealplanner/generate")
 									  .queryParam("timeFrame", time)
 									  .queryParam("apiKey", "c3ff53dc9a834807b17a29597bd2210c")
-									  .queryParamIfPresent("targetCalories", Optional.ofNullable(numCalories))
-									  .queryParamIfPresent("diet", Optional.ofNullable(diet))
-									  .queryParamIfPresent("exclude", Optional.ofNullable(exclusions))
-									  .build()
-									  .toUri();
+									  .queryParam("targetCalories", numCalories)
+									  .queryParam("diet", diet)
+									  .queryParam("exclude", exclusions)
+									  .build().toUri();
 		
 		ResponseEntity<?> responseEntity = rt.getForEntity(uri, responseClass);
 		
