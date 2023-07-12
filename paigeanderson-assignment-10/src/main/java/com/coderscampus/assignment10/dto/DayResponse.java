@@ -21,8 +21,7 @@ public class DayResponse {
 	}
 	@Override
 	public String toString() {
-		return "DayResponse: [meals = " + meals + 
-				", nutrients = " + nutrients + "]";
+		return "DayResponse: [meals = " + meals + "]";
 	}
 	
 	

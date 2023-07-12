@@ -15,41 +15,45 @@ import com.coderscampus.assignment10.dto.WeekResponse;
 
 @RestController
 public class MealPlanController {
-	
+
 	@SuppressWarnings("unchecked")
 	@GetMapping("mealplanner/week")
-	public ResponseEntity<WeekResponse> getWeekMeals(@RequestParam(name = "calories") String numCalories, 
-													 @RequestParam(name = "diet") String diet, 
-													 @RequestParam(name = "exclude") String exclusions){
-		return (ResponseEntity<WeekResponse>) getMealResponse(WeekResponse.class, "week", numCalories, diet, exclusions);
+	public ResponseEntity<WeekResponse> getWeekMeals(
+			@RequestParam(required = false) Integer numCalories,
+			@RequestParam(required = false) String diet,
+			@RequestParam(required = false) String exclusions) {
 		
+		return (ResponseEntity<WeekResponse>) getMealPlanResponse(numCalories, diet, exclusions, "week", WeekResponse.class);
 	}
 
 	@SuppressWarnings("unchecked")
 	@GetMapping("mealplanner/day")
-	public ResponseEntity<DayResponse> getDayMeals(@RequestParam(name = "calories") String numCalories, 
-												   @RequestParam(name = "diet") String diet, 
-												   @RequestParam(name = "exclude")String exclusions){
-		return (ResponseEntity<DayResponse>) getMealResponse(DayResponse.class, "day", numCalories, diet, exclusions);
+	public ResponseEntity<DayResponse> getDayMeals(
+			@RequestParam(required = false) Integer numCalories,
+			@RequestParam(required = false) String diet, 
+			@RequestParam(required = false) String exclusions) {
+		
+		return (ResponseEntity<DayResponse>) getMealPlanResponse(numCalories, diet, exclusions, "day", DayResponse.class);
 		
 	}
 	
-	private ResponseEntity<?> getMealResponse(Class<?> responseClass, String time, String numCalories, String diet, String exclusions){
-		
-		RestTemplate rt = new RestTemplate();
-		
-		
+	
+	
+	private ResponseEntity<?> getMealPlanResponse(Integer numCalories, String diet, String exclusions, String time,
+			Class<?> responseClass) {
+
 		URI uri = UriComponentsBuilder.fromHttpUrl("https://api.spoonacular.com/mealplanner/generate")
-									  .queryParam("timeFrame", time)
-									  .queryParam("apiKey", "c3ff53dc9a834807b17a29597bd2210c")
-									  .queryParam("calories", Optional.ofNullable(numCalories))
-									  .queryParam("diet", Optional.ofNullable(diet))
-									  .queryParam("exclude", Optional.ofNullable(exclusions))
-									  .build().toUri();
-		
+									  .queryParam("timeFrame", time).queryParam("apiKey", "c3ff53dc9a834807b17a29597bd2210c")
+									  .queryParamIfPresent("numCalories", Optional.ofNullable(numCalories))
+									  .queryParamIfPresent("diet", Optional.ofNullable(diet))
+									  .queryParamIfPresent("exclude", Optional.ofNullable(exclusions))
+									  .build()
+									  .toUri();
+
+		RestTemplate rt = new RestTemplate();
 		ResponseEntity<?> responseEntity = rt.getForEntity(uri, responseClass);
-		
 		return responseEntity;
+
 	}
 
 }
