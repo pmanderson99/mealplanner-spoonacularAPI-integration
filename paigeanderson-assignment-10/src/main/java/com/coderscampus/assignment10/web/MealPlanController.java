@@ -39,14 +39,14 @@ public class MealPlanController {
 	
 	
 	
-	private ResponseEntity<?> getMealPlanResponse(Integer numCalories, String diet, String exclusions, String time,
-			Class<?> responseClass) {
+	private ResponseEntity<?> getMealPlanResponse(Integer numCalories, String diet, String exclusions, String time, Class<?> responseClass) {
 
 		URI uri = UriComponentsBuilder.fromHttpUrl("https://api.spoonacular.com/mealplanner/generate")
-									  .queryParam("timeFrame", time).queryParam("apiKey", "c3ff53dc9a834807b17a29597bd2210c")
-									  .queryParamIfPresent("numCalories", Optional.ofNullable(numCalories))
+									  .queryParamIfPresent("targetCalories", Optional.ofNullable(numCalories))
 									  .queryParamIfPresent("diet", Optional.ofNullable(diet))
 									  .queryParamIfPresent("exclude", Optional.ofNullable(exclusions))
+									  .queryParam("timeFrame", time)
+									  .queryParam("apiKey", "c3ff53dc9a834807b17a29597bd2210c")
 									  .build()
 									  .toUri();
 
