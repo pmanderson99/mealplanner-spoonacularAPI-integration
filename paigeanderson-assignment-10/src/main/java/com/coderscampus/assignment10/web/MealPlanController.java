@@ -46,7 +46,7 @@ public class MealPlanController {
 									  .queryParamIfPresent("diet", Optional.ofNullable(diet))
 									  .queryParamIfPresent("exclude", Optional.ofNullable(exclusions))
 									  .queryParam("timeFrame", time)
-									  .queryParam("apiKey", "c3ff53dc9a834807b17a29597bd2210c")
+									  .queryParam("apiKey", "117eeaa165af4b739206a40cb0d7da8a")
 									  .build()
 									  .toUri();
 
@@ -57,3 +57,4 @@ public class MealPlanController {
 	}
 
 }
+
