@@ -39,15 +39,15 @@ public class MealPlanController {
 
 	}
 
-	private ResponseEntity<?> getMealPlanResponse(String targetCalories, String diet, String exclusions, String time,
-			Class<?> responseClass) {
+	private ResponseEntity<?> getMealPlanResponse(String numCalories, String diet, String exclusions, 
+			String time, Class<?> responseClass) {
 		RestTemplate rt = new RestTemplate();
 
 		UriComponentsBuilder builder = UriComponentsBuilder
 				.fromHttpUrl("https://api.spoonacular.com/mealplanner/generate")
 				.queryParam("timeFrame", time)
 				.queryParam("apiKey", "117eeaa165af4b739206a40cb0d7da8a")
-				.queryParamIfPresent("targetCalories", Optional.ofNullable(targetCalories))
+				.queryParamIfPresent("targetCalories", Optional.ofNullable(numCalories))
 				.queryParamIfPresent("diet", Optional.ofNullable(diet))
 				.queryParamIfPresent("exclude", Optional.ofNullable(exclusions));
 		
