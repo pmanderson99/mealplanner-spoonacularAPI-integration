@@ -19,42 +19,43 @@ public class MealPlanController {
 	@SuppressWarnings("unchecked")
 	@GetMapping("mealplanner/week")
 	public ResponseEntity<WeekResponse> getWeekMeals(
-			@RequestParam(required = false) Integer numCalories,
+			@RequestParam(required = false) String numCalories,
 			@RequestParam(required = false) String diet,
 			@RequestParam(required = false) String exclusions) {
-		
-		return (ResponseEntity<WeekResponse>) getMealPlanResponse(numCalories, diet, exclusions, "week", WeekResponse.class);
+
+		return (ResponseEntity<WeekResponse>) getMealPlanResponse(numCalories, diet, exclusions, "week",
+				WeekResponse.class);
 	}
 
 	@SuppressWarnings("unchecked")
 	@GetMapping("mealplanner/day")
 	public ResponseEntity<DayResponse> getDayMeals(
-			@RequestParam(required = false) Integer numCalories,
-			@RequestParam(required = false) String diet, 
+			@RequestParam(required = false) String numCalories,
+			@RequestParam(required = false) String diet,
 			@RequestParam(required = false) String exclusions) {
-		
-		return (ResponseEntity<DayResponse>) getMealPlanResponse(numCalories, diet, exclusions, "day", DayResponse.class);
-		
+
+		return (ResponseEntity<DayResponse>) getMealPlanResponse(numCalories, diet, exclusions, "day",
+				DayResponse.class);
+
 	}
-	
-	
-	
-	private ResponseEntity<?> getMealPlanResponse(Integer numCalories, String diet, String exclusions, String time, Class<?> responseClass) {
 
-		URI uri = UriComponentsBuilder.fromHttpUrl("https://api.spoonacular.com/mealplanner/generate")
-									  .queryParamIfPresent("targetCalories", Optional.ofNullable(numCalories))
-									  .queryParamIfPresent("diet", Optional.ofNullable(diet))
-									  .queryParamIfPresent("exclude", Optional.ofNullable(exclusions))
-									  .queryParam("timeFrame", time)
-									  .queryParam("apiKey", "117eeaa165af4b739206a40cb0d7da8a")
-									  .build()
-									  .toUri();
-
+	private ResponseEntity<?> getMealPlanResponse(String targetCalories, String diet, String exclusions, String time,
+			Class<?> responseClass) {
 		RestTemplate rt = new RestTemplate();
+
+		UriComponentsBuilder builder = UriComponentsBuilder
+				.fromHttpUrl("https://api.spoonacular.com/mealplanner/generate")
+				.queryParam("timeFrame", time)
+				.queryParam("apiKey", "117eeaa165af4b739206a40cb0d7da8a")
+				.queryParamIfPresent("targetCalories", Optional.ofNullable(targetCalories))
+				.queryParamIfPresent("diet", Optional.ofNullable(diet))
+				.queryParamIfPresent("exclude", Optional.ofNullable(exclusions));
+		
+		URI uri = builder.build().toUri();
+
 		ResponseEntity<?> responseEntity = rt.getForEntity(uri, responseClass);
 		return responseEntity;
 
 	}
 
 }
-
