@@ -23,8 +23,8 @@ public class MealPlanController {
 			@RequestParam(required = false) String diet,
 			@RequestParam(required = false) String exclusions) {
 
-		return (ResponseEntity<WeekResponse>) getMealPlanResponse(numCalories, diet, exclusions, "week",
-				WeekResponse.class);
+		return (ResponseEntity<WeekResponse>) getMealPlanResponse("week", WeekResponse.class, numCalories, 
+				diet, exclusions);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -34,14 +34,14 @@ public class MealPlanController {
 			@RequestParam(required = false) String diet,
 			@RequestParam(required = false) String exclusions) {
 
-		return (ResponseEntity<DayResponse>) getMealPlanResponse(numCalories, diet, exclusions, "day",
-				DayResponse.class);
+		return (ResponseEntity<DayResponse>) getMealPlanResponse("day", DayResponse.class, numCalories,
+				diet, exclusions);
 
 	}
 
 	
-	private ResponseEntity<?> getMealPlanResponse(String numCalories, String diet, String exclusions, 
-			String time, Class<?> responseClass) {
+	private ResponseEntity<?> getMealPlanResponse(String time, Class<?> responseClass, String numCalories, 
+			String diet, String exclusions) {
 		RestTemplate rt = new RestTemplate();
 
 		URI uri = UriComponentsBuilder.fromHttpUrl("https://api.spoonacular.com/mealplanner/generate")
