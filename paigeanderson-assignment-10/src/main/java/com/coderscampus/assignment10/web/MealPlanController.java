@@ -20,7 +20,7 @@ public class MealPlanController {
 	@SuppressWarnings("unchecked")
 	@GetMapping("/mealplanner/week")
 	public ResponseEntity<WeekResponse> getWeekMeals(
-			@RequestParam(required = false)String numCalories, 
+			@RequestParam(value = "targetCalories", required = false)String numCalories, 
 			@RequestParam(required = false)String diet, 
 			@RequestParam(required = false)String exclusions){
 
@@ -31,7 +31,7 @@ public class MealPlanController {
 	@SuppressWarnings("unchecked")
 	@GetMapping("/mealplanner/day")
 	public ResponseEntity<DayResponse> getDayMeals(
-			@RequestParam(required = false)String numCalories, 
+			@RequestParam(value = "targetCalories", required = false)String numCalories, 
 			@RequestParam(required = false)String diet, 
 			@RequestParam(required = false)String exclusions){
 
@@ -53,6 +53,7 @@ public class MealPlanController {
 									  .queryParamIfPresent("exclude", Optional.ofNullable(exclusions))
 									  .build()
 									  .toUri();
+		System.out.println(uri.getQuery());
 		
 		ResponseEntity<?> responseEntity = rt.getForEntity(uri, responseClass);
 		return responseEntity;
