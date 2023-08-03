@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -15,9 +16,13 @@ import com.coderscampus.assignment10.dto.WeekResponse;
 @RestController
 public class MealPlanController {
 
+
 	@SuppressWarnings("unchecked")
 	@GetMapping("/mealplanner/week")
-	public ResponseEntity<WeekResponse> getWeekMeals(String numCalories, String diet, String exclusions){
+	public ResponseEntity<WeekResponse> getWeekMeals(
+			@RequestParam(required = false)String numCalories, 
+			@RequestParam(required = false)String diet, 
+			@RequestParam(required = false)String exclusions){
 
 		return (ResponseEntity<WeekResponse>) getMealPlanResponse("week", WeekResponse.class, numCalories, diet,
 				exclusions);
@@ -25,7 +30,10 @@ public class MealPlanController {
 
 	@SuppressWarnings("unchecked")
 	@GetMapping("/mealplanner/day")
-	public ResponseEntity<DayResponse> getDayMeals(String numCalories, String diet, String exclusions){
+	public ResponseEntity<DayResponse> getDayMeals(
+			@RequestParam(required = false)String numCalories, 
+			@RequestParam(required = false)String diet, 
+			@RequestParam(required = false)String exclusions){
 
 		return (ResponseEntity<DayResponse>) getMealPlanResponse("day", DayResponse.class, numCalories, diet,
 				exclusions);
@@ -50,6 +58,5 @@ public class MealPlanController {
 		return responseEntity;
 		
 	}
-
 }
 
